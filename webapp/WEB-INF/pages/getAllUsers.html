@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+    <style>
+        table th, table td {
+            padding: 5px;
+        }
+
+        .row {
+            font-style: italic;
+        }
+
+        .even-row {
+            color: black;
+        }
+
+        .odd-row {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+<h1>Users</h1>
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Email</th>
+        <th>Role/s</th>
+    </tr>
+
+    <tr th:each="user, state : ${users}"
+        class="row" th:classappend="${state.odd} ? 'odd-row' : 'even-row'">
+        <td th:utext="${user.getId()}">Id</td>
+        <td th:utext="${user.getName()}">Name</td>
+        <td th:utext="${user.getAge()}">Age</td>
+        <td th:utext="${user.getEmail()}">Email</td>
+        <td th:utext="${user.getStringRoles()}">Roles</td>
+    </tr>
+</table>
+
+<br/>
+<a href="/admin/users/new">Create new user</a>
+
+<br/>
+<hr/>
+
+<h2>If you want to edit or delete user tap on the Name:</h2>
+
+<div th:each="user : ${users}">
+    <a th:href="@{/admin/users/{id}(id=${user.getId()})}" th:text="${user.getName()}">user</a>
+</div>
+
+<br/>
+<hr/>
+
+<form th:action="@{/logout}" method="POST" name="logoutForm"
+      id="logout">
+    <input type="submit", value="Log out"/>
+</form>
+
+</body>
+
+</html>

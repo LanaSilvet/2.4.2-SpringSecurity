@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+    <style>
+        table th, table td {
+            padding: 5px;
+        }
+
+        .row {
+            font-style: italic;
+        }
+
+        .even-row {
+            color: black;
+        }
+
+        .odd-row {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+<h1>User</h1>
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Email</th>
+        <th>Roles</th>
+    </tr>
+
+    <tr th:each="user, state : ${user}"
+        class="row" th:classappend="${state.odd} ? 'odd-row' : 'even-row'">
+        <td th:text="${user.getId()}">VALUE</td>
+        <td th:text="${user.getName()}">VALUE</td>
+        <td th:text="${user.getAge()}">VALUE</td>
+        <td th:text="${user.getEmail()}">VALUE</td>
+        <td th:text="${user.getStringRoles()}">VALUE</td>
+    </tr>
+</table>
+
+<br/>
+
+<form th:method="GET" th:action="@{/admin/users/{id}/edit(id=${user.getId()})}">
+    <input type="submit" value="Edit">
+</form>
+
+<br/>
+
+<form th:method="POST" th:action="@{/admin/users/{id}/delete(id=${user.getId()})}">
+    <input type="submit" value="Delete">
+</form>
+
+<br/>
+<hr/>
+
+<form th:action="@{/logout}" method="POST" name="logoutForm"
+      id="logout">
+    <input type="submit", value="Log out"/>
+</form>
+
+</body>
+</html>
